@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="game-container">
+        <header class="page-heading">
+            <p class="small-heading">A GAME OF CHANCE - KMG</p>
+            <h1>Rock Paper Scissors</h1>
+            <p class="subtitle">You vs Computer</p>
+        </header>
+
+        <section class="game-card">
+            <h2>Make your choice</h2>
+            <form action="/" method="POST" class="choice-form">
+                <button class="choice-button" type="submit" name="choice" value="rock">
+                    <span class="choice-emoji">✊</span>
+                    <span>Rock</span>
+                </button>
+                <button class="choice-button" type="submit" name="choice" value="paper">
+                    <span class="choice-emoji">✋</span>
+                    <span>Paper</span>
+                </button>
+                <button class="choice-button" type="submit" name="choice" value="scissors">
+                    <span class="choice-emoji">✌️</span>
+                    <span>Scissors</span>
+                </button>
+            </form>
+
+            {% if result %}
+                <div class="result-area">
+                    {% if result == "win" %}
+                        <p class="result-label win">You won this round!</p>
+                    {% elif result == "lose" %}
+                        <p class="result-label lose">Computer won this round.</p>
+                    {% elif result == "draw" %}
+                        <p class="result-label draw">It is a draw!</p>
+                    {% else %}
+                        <p class="result-label">Please choose one of the options.</p>
+                    {% endif %}
+
+                    {% if user_choice and computer_choice %}
+                        <div class="round-details">
+                            <p>You chose <strong>{{ user_choice }}</strong></p>
+                            <p>Computer chose <strong>{{ computer_choice }}</strong></p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p class="hint">Your result will appear here.</p>
+            {% endif %}
+        </section>
+
+        <section class="score-card">
+            <h2>Your score</h2>
+            <div class="score-row">
+                <div class="score-item">
+                    <span class="score-number">{{ wins }}</span>
+                    <span class="score-name">Wins</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-number">{{ losses }}</span>
+                    <span class="score-name">Losses</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-number">{{ draws }}</span>
+                    <span class="score-name">Draws</span>
+                </div>
+            </div>
+            <form action="/reset" method="POST">
+                <button class="reset-button" type="submit">Reset score</button>
+            </form>
+        </section>
+
+        <footer>Made with Python, HTML, CSS, Flask</footer>
+        <footer>By Mokshagna Goud K</footer>
+    </main>
+</body>
+</html>
